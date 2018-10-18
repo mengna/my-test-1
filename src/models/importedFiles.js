@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const keyConversionUtil = require('../utilities/keyConvertionUtil');
+const _ = require('lodash');
 
 const Schema = mongoose.Schema;
 
@@ -16,7 +17,9 @@ importedFilesSchema.pre('validate', function(next) {
 });
 
 importedFilesSchema.post('findOne', function(doc) {
-    doc._doc = keyConversionUtil.snakeCaseToCamelCase(doc._doc);
+    if(_.get(doc, '_doc')) {
+        doc._doc = keyConversionUtil.snakeCaseToCamelCase(doc._doc);
+    }
 });
 
 module.exports = mongoose.model('imported_files', importedFilesSchema);

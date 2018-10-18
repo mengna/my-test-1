@@ -22,8 +22,10 @@ tagsSchema.pre('validate', function(next) {
 });
 
 tagsSchema.post('find', function(doc) {
-    _.forEach(doc, (item)=>{
-        item._doc = keyConversionUtil.snakeCaseToCamelCase(item._doc);
+    _.forEach(doc, (item) => {
+        if (_.get(item, '_doc')) {
+            item._doc = keyConversionUtil.snakeCaseToCamelCase(item._doc);
+        }
     });
 });
 

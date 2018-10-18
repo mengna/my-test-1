@@ -38,12 +38,16 @@ peopleSchema.pre('validate', function(next) {
 });
 
 peopleSchema.post('findOne', function(doc) {
-    doc._doc = keyConversionUtil.snakeCaseToCamelCase(doc._doc);
+    if(_.get(doc, '_doc')) {
+        doc._doc = keyConversionUtil.snakeCaseToCamelCase(doc._doc);
+    }
 });
 
 peopleSchema.post('find', function(doc) {
-    _.forEach(doc, (item)=>{
-        item._doc = keyConversionUtil.snakeCaseToCamelCase(item._doc);
+    _.forEach(doc, (item) => {
+        if (_.get(item, '_doc')) {
+            item._doc = keyConversionUtil.snakeCaseToCamelCase(item._doc);
+        }
     });
 });
 
