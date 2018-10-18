@@ -1,5 +1,7 @@
-const people = require('./routes/people');
-const messages = require('./routes/messages');
+const people      = require('./routes/people');
+const messages    = require('./routes/messages');
+const user        = require('./routes/user');
+const verifyToken = require('./services/jwtVerify');
 
 module.exports = (app) => {
     app.get('/myapp/check', messages.checkStatus);
@@ -11,6 +13,7 @@ module.exports = (app) => {
 
     app.post(
         '/myapp/v1.0/import',
+        verifyToken,
         people.import
     );
 
@@ -27,5 +30,10 @@ module.exports = (app) => {
     app.get(
         '/myapp/v1.0/people',
         people.getPeopleByGender
+    );
+
+    app.post(
+        '/myapp/v1.0/login',
+        user.login
     );
 };
