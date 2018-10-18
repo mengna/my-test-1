@@ -28,4 +28,6 @@ module.exports = (app) => {
         '/myapp/v1.0/people',
         people.getPeopleByGender
     );
+
+    // test
 };
