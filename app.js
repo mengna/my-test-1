@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const redis = require('redis');
 
 let app = express();
 const port = 3000;
@@ -16,21 +15,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect('mongodb://localhost:27017/my_test', { useNewUrlParser: true });
+mongoose.connect('mongodb://mongo:27017/my_test', { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
 db.once('open', () => {
     console.log('mongoDB is connected!');
-});
-
-const redisClient = redis.createClient();
-redisClient.on('connect', () => {
-    console.log('Connected to Redis');
-});
-
-redisClient.on("error", (err) => {
-    console.log("Error " + err);
 });
 
 // log

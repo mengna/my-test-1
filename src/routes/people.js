@@ -1,15 +1,11 @@
 const PeopleModel = require('../models/people');
 const TagModel = require('../models/tags');
 const ImportedFileModel = require('../models/importedFiles');
-const redis = require('redis');
 const _ = require('lodash');
 
 
 
 exports.createPerson = async (req, res, next) => {
-    // const redisClient = redis.createClient();
-    // redisClient.set('test', '2');
-
     const body = req.body;
 
     const personData = {
@@ -32,11 +28,11 @@ exports.createPerson = async (req, res, next) => {
 };
 
 exports.import = async(req, res, next) => {
-    const filePath = _.get(req, 'body.file_path');
-    const file = require(filePath);
+    const file = require('../../dataservice/people');
+    const filePath = 'people.json';
 
     // check idempotency key
-    const impFile = await ImportedFileModel.findOne({file_path: filePath}).catch((err) => {
+    const impFile = await ImportedFileModel.findOne({file_path: filePath }).catch((err) => {
         if(err) {
             return next({status: 601, message: err.message});
         }

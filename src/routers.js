@@ -14,26 +14,29 @@ module.exports = (app) => {
 
     app.post(
         '/myapp/v1.0/import',
-        verifyToken,
         countAPIs,
+        verifyToken,
         people.import
     );
 
     app.get(
         '/myapp/v1.0/tags',
         countAPIs,
+        verifyToken,
         people.getTags
     );
 
     app.get(
         '/myapp/v1.0/person/:id',
         countAPIs,
+        verifyToken,
         people.getPersonById
     );
 
     app.get(
         '/myapp/v1.0/people',
         countAPIs,
+        verifyToken,
         people.getPeopleByGender
     );
 
